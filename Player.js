@@ -21,12 +21,10 @@ class Player {
   }
 
   playTurn(warrior) {
-    // Check if I am taking damage
-    // Check my injuries require me to retreat
-    // Check if there is an enemy in front of me
-    // this.hasTakenDamage = this.hasTakenDamage(warrior)
-    // this.isInjured = this.isInjured(warrior)
-    // this.isCriticallyInjured = this.isCriticallyInjured(warrior)
+    if (warrior.feel().isWall()) {
+      warrior.pivot()
+      return
+    }
 
     if (this.isTakingDamage(warrior)) {
       if (warrior.health() <= 10) {
