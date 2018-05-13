@@ -48,7 +48,7 @@ class Player {
       if (this.isInjured(warrior)) {
         warrior.rest()
         return
-      })
+      }
 
       if (warrior.feel().isEmpty()) {
         warrior.walk()
