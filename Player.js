@@ -12,18 +12,22 @@ class Player {
     return Boolean(warrior.health() < 20)
   }
 
-  isEnemyInSight(warrior) {
-    let view = warrior.look().find(space => !space.isEmpty())
+  isEnemyInSight(warrior, direction) {
+    let view = warrior.look(direction).find(space => !space.isEmpty())
     return view && view.isEnemy()
   }
 
   playTurn(warrior) {
-    if (this.isEnemyInSight(warrior)) {
+    if (this.isEnemyInSight(warrior, 'backward')) {
+      warrior.shoot('backward')
+    } else if (this.isEnemyInSight(warrior, 'forward')) {
       warrior.shoot()
     } else if (warrior.feel().isEmpty()) {
       warrior.walk()
     } else if (warrior.feel().isCaptive()) {
       warrior.rescue()
+    } else if (warrior.feel().isWall()) {
+      warrior.pivot()
     } else {
       warrior.attack()
     }
