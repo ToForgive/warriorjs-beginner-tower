@@ -17,8 +17,21 @@ class Player {
     return view && view.isEnemy()
   }
 
+  isCaptiveInSight(warrior, direction) {
+    let view = warrior.look(direction).find(space => !space.isEmpty())
+    return view && view.isCaptive()
+  }
+
   playTurn(warrior) {
-    if (this.isEnemyInSight(warrior, 'backward')) {
+    if (this.isCaptiveInSight(warrior, 'backward')) {
+      if (warrior.feel('backward').isCaptive()) {
+        warrior.rescue('backward')
+        return
+      } else {
+        warrior.walk('backward')
+        return
+      }
+    } else if (this.isEnemyInSight(warrior, 'backward')) {
       warrior.shoot('backward')
     } else if (this.isEnemyInSight(warrior, 'forward')) {
       warrior.shoot()
